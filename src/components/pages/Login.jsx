@@ -1,35 +1,61 @@
-import React, { useState } from 'react';
+// Login.jsx
+import React,{useContext} from 'react';
+import { useNavigate } from 'react-router-dom';
+import { UserContext} from '../../providers/UserProvider';
+
+import useCheckSession from '../../hooks/useCheckSession';
 import axios from 'axios';
-import { useNavigate} from 'react-router-dom';
 
-export const Login = () => {
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
+//バックエンド側の処理
+// app.post('/api/login', passport.authenticate('local'),async (req, res) => {
+//     res.status(200).json({ message: "ログイン成功", user: req.user });
+// });
 
+const Login = () => {
     const navigate = useNavigate();
+    const { isLoggedIn, loading } = useCheckSession();
+    const { setUser } = useContext(UserContext);
 
+    if (loading) {
+        return <p>読み込み中...</p>;
+    }
 
-    const handleLogin = async () => {
-    
-        try {
-            const response = await axios.post('http://localhost:3001/api/login', { email, password });
-            console.log(response);
-            const user = response.data;
-            // ログイン後の処理
-            navigate('/', { state: { user } }); // / ページに移動し、ユーザー情報を渡す
-        } catch (error) {
-            console.error(error);
-        }
-    };
+    if (isLoggedIn) {
+        return navigate('/');
+    }
+
+    const handleClick = (e) => {
+        e.preventDefault();
+        const email = e.target.email.value;
+        const password = e.target.password.value;
+        axios.post('http://localhost:3001/api/login', { email, password })
+            .then(response => {
+                console.log(response);
+                if (response.status === 200) {
+                    //userをcontextに保存
+                    setUser(response.data.user);
+                    navigate('/');
+                }else{
+                    navigate('/login');
+                }
+            })
+            .catch(error => {
+                console.log(error);
+                navigate('/500');
+            });
+        
+
+    }
 
     return (
-        <div>
-            <h2>Login</h2>
-            <input type="email" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)} />
-            <input type="password" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)} />
-            <button onClick={handleLogin}>Login</button>
-        </div>
+        <form onSubmit={(e) => handleClick(e)}>
+            <label htmlFor="email">メールアドレス</label>
+            <input type="email" id="email" name='email'/>
+            <label htmlFor="password">パスワード</label>
+            <input type="password" id="password" name='password' />
+            <button type="submit">ログイン</button>
+        </form>
     );
+};
 
-
-}
+export default Login;
