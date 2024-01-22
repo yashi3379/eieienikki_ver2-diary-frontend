@@ -3,9 +3,9 @@ import {Routes,Route, BrowserRouter} from 'react-router-dom';
 import{Main} from '../components/templates/Main';
 import { DefaultTemp } from '../components/templates/DefaultTemp';
 
-import {Mypage} from '../components/pages/Mypage';
-import{UserRegister} from '../components/pages/UserRegister';
-import {Login} from '../components/pages/Login';
+import Mypage from '../components/pages/Mypage';
+import UserRegister from '../components/pages/UserRegister';
+import Login  from '../components/pages/Login';
 import { ServerError } from '../components/pages/errors/ServerError';
 
 

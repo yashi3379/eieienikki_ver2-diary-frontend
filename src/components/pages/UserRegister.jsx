@@ -1,44 +1,75 @@
-import React, { useState } from 'react';
-import axios from 'axios';
+// UserRegister.jsx
+import React,{useContext} from 'react';
 import { useNavigate } from 'react-router-dom';
 
-export const UserRegister = ()=> {
-    const [username, setUsername] = useState('');
-    const [password, setPassword] = useState('');
-    const [email, setUseremail] = useState('');
+import { UserContext } from '../../providers/UserProvider';
+import useCheckSession from '../../hooks/useCheckSession';
+import axios from 'axios';
 
-    const navigate = useNavigate();
-  
-    const handleRegister = async () => {
-      try {
-        const response = await axios.post('http://localhost:3001/api/register', { username,email,password });
-        const user = response.data;
-        console.log(user);
-        //ユーザー登録後の処理
-        navigate('/', { state: { user } }); // ページに移動し、ユーザー情報を渡す
-      } catch (error) {
-        if (error.response) {
-            // サーバーがエラーレスポンスを返した場合
-            console.log(error.response.data);
-            console.log(error.response.status);
-          } else if (error.request) {
-            // リクエストが送信されたが、レスポンスがない場合
-            console.log(error.request);
-          } else {
-            // リクエストを送信する前に発生したエラー
-            console.log('Error', error.message);
-          }
-          console.log(error.config);
-      }
-    };
-  
+//バックエンド側の処理
+// app.post('/api/register', async (req, res) => {
+//   try {
+//       const { email, password } = req.body;
+//       const newUser = new User({ email });
+//       const registeredUser = await User.register(newUser, password);
+//       req.login(registeredUser, err => {
+//           if (err) return res.status(500).json({ message: "ログインエラー" });
+//           res.status(200).json({ message: "登録成功", user: req.user });
+//       });
+//   } catch (e) {
+//       res.status(400).json({ message: e.message });
+//   }
+// }
+// );
+
+const UserRegister = () => {
+    const { isLoggedIn, loading } = useCheckSession();
+    const { setUser } = useContext(UserContext);
+    const navigate = useNavigate(); 
+
+    if (loading) {
+        return <p>読み込み中...</p>;
+    }
+
+    if (isLoggedIn) {
+        return navigate('/');
+    }
+
+    const handleClick = (e) => {
+        e.preventDefault();
+        const username = e.target.username.value;
+        const email = e.target.email.value;
+        const password = e.target.password.value;
+        axios.post('http://localhost:3001/api/register', { username,email, password })
+            .then(response => {
+                console.log(response);
+                if (response.status === 200) {
+                    //userをcontextに保存
+                   setUser(response.data.user);
+                    navigate('/');
+                }else{
+                    navigate('/register');
+                }
+            })
+            .catch(error => {
+                console.log(error);
+                navigate('/500');
+            });
+        
+
+    }
+
     return (
-      <div>
-        <h2>Register</h2>
-        <input type="text" placeholder="Username" value={username} onChange={(e) => setUsername(e.target.value)} />
-        <input type="email" placeholder="Email" value={email} onChange={(e) => setUseremail(e.target.value)} />
-        <input type="password" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)} />
-        <button onClick={handleRegister}>Register</button>
-      </div>
+        <form onSubmit={(e) => handleClick(e)}>
+            <label htmlFor="username">ユーザ名</label>
+            <input type="text" id="username" name='username'/>
+            <label htmlFor="email">メールアドレス</label>
+            <input type="email" id="email" name='email'/>
+            <label htmlFor="password">パスワード</label>
+            <input type="password" id="password" name='password' />
+            <button type="submit">登録</button>
+        </form>
     );
-  }
+};
+
+export default UserRegister;

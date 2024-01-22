@@ -2,11 +2,14 @@
 
 import React from "react";
 import { Router } from './routes/Router';
+import { UserProvider } from "./providers/UserProvider";
 
 function App() {
   return (
     <div className="App">
-      <Router />
+      <UserProvider>
+        <Router />
+      </UserProvider>
     </div>
 
   );
