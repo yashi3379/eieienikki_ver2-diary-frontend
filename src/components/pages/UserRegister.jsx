@@ -23,13 +23,11 @@ import axios from 'axios';
 // );
 
 const UserRegister = () => {
-    const { isLoggedIn, loading } = useCheckSession();
+    const { isLoggedIn } = useCheckSession();
     const { setUser } = useContext(UserContext);
     const navigate = useNavigate(); 
 
-    if (loading) {
-        return <p>読み込み中...</p>;
-    }
+    
 
     if (isLoggedIn) {
         return navigate('/');

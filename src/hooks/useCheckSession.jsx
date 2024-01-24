@@ -1,4 +1,4 @@
-import { useState, useEffect, useContext } from 'react';
+import { useEffect, useContext, useState } from 'react';
 import axios from 'axios';
 import { UserContext } from '../providers/UserProvider';
 
@@ -14,13 +14,15 @@ import { UserContext } from '../providers/UserProvider';
 //isLoggedinの状態を確認するためのカスタムフック
 const useCheckSession = () => {
     const { user, setUser } = useContext(UserContext);
-    const [loading, setLoading] = useState(true);
     const [isLoggedIn, setIsLoggedIn] = useState(false);
-
+    
+    
+      
     useEffect(() => {
         axios.get('http://localhost:3001/api/check-session')
             .then(response => {
                 if (response.data.authenticated) {
+                    console.log(response.data.user);
                     setUser(response.data.user);
                     setIsLoggedIn(true);
                 } else {
@@ -30,12 +32,10 @@ const useCheckSession = () => {
             .catch(() => {
                 setUser(null);
             })
-            .finally(() => {
-                setLoading(false);
-            });
     }, [setUser, setIsLoggedIn]);
 
-    return { user, loading, isLoggedIn };
+    return { user , isLoggedIn };
+    
 };
 
 export default useCheckSession;
