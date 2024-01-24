@@ -3,7 +3,7 @@ import React,{useContext} from 'react';
 import { useNavigate } from 'react-router-dom';
 import { UserContext} from '../../providers/UserProvider';
 
-import useCheckSession from '../../hooks/useCheckSession';
+
 import axios from 'axios';
 
 //バックエンド側の処理
@@ -13,26 +13,21 @@ import axios from 'axios';
 
 const Login = () => {
     const navigate = useNavigate();
-    const { isLoggedIn, loading } = useCheckSession();
-    const { setUser } = useContext(UserContext);
-
-    if (loading) {
-        return <p>読み込み中...</p>;
-    }
-
-    if (isLoggedIn) {
+    const { user,setUser } = useContext(UserContext);
+    if(user){
         return navigate('/');
     }
 
     const handleClick = (e) => {
         e.preventDefault();
-        const email = e.target.email.value;
+        const username = e.target.username.value;
         const password = e.target.password.value;
-        axios.post('http://localhost:3001/api/login', { email, password })
+        axios.post('http://localhost:3001/api/login', { username, password })
             .then(response => {
                 console.log(response);
                 if (response.status === 200) {
                     //userをcontextに保存
+                    console.log(response.data);
                     setUser(response.data.user);
                     navigate('/');
                 }else{
@@ -49,8 +44,8 @@ const Login = () => {
 
     return (
         <form onSubmit={(e) => handleClick(e)}>
-            <label htmlFor="email">メールアドレス</label>
-            <input type="email" id="email" name='email'/>
+            <label htmlFor="username">ユーザーネーム</label>
+            <input type="text" id="username" name='username'/>
             <label htmlFor="password">パスワード</label>
             <input type="password" id="password" name='password' />
             <button type="submit">ログイン</button>
