@@ -1,11 +1,10 @@
 // Login.jsx
-import React,{useContext} from 'react';
+import React, { useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { UserContext} from '../../providers/UserProvider';
+import { AuthContext } from '../../providers/AuthProvider';
 
 
 import axios from 'axios';
-import { useEffect } from 'react';
 
 //バックエンド側の処理
 // app.post('/api/login', passport.authenticate('local'),async (req, res) => {
@@ -14,12 +13,9 @@ import { useEffect } from 'react';
 
 const Login = () => {
     const navigate = useNavigate();
-    const { user,setUser } = useContext(UserContext);
-    useEffect(() => {
-        if (user) {
-            navigate('/');
-        }
-    }, [user, navigate]);
+    const { setUser,setIsLoggedIn } = useContext(AuthContext);
+
+
 
     const handleClick = (e) => {
         e.preventDefault();
@@ -32,8 +28,9 @@ const Login = () => {
                     //userをcontextに保存
                     console.log(response.data);
                     setUser(response.data.user);
+                    setIsLoggedIn(true);
                     navigate('/');
-                }else{
+                } else {
                     navigate('/login');
                 }
             })
@@ -41,14 +38,14 @@ const Login = () => {
                 console.log(error);
                 navigate('/500');
             });
-        
+
 
     }
 
     return (
         <form onSubmit={(e) => handleClick(e)}>
             <label htmlFor="username">ユーザーネーム</label>
-            <input type="text" id="username" name='username'/>
+            <input type="text" id="username" name='username' />
             <label htmlFor="password">パスワード</label>
             <input type="password" id="password" name='password' />
             <button type="submit">ログイン</button>

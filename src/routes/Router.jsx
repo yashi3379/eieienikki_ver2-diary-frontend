@@ -1,4 +1,5 @@
-import {Routes,Route, BrowserRouter} from 'react-router-dom';
+import React,{useContext} from 'react';
+import {Routes,Route, BrowserRouter,Navigate} from 'react-router-dom';
 
 import{Main} from '../components/templates/Main';
 import { DefaultTemp } from '../components/templates/DefaultTemp';
@@ -7,16 +8,24 @@ import Mypage from '../components/pages/Mypage';
 import UserRegister from '../components/pages/UserRegister';
 import Login  from '../components/pages/Login';
 import { ServerError } from '../components/pages/errors/ServerError';
+import { AuthContext } from '../providers/AuthProvider';
+
 
 
 
 export const Router = () => {
+    const { user,isLoggedIn } = useContext(AuthContext);
+    console.log(user);
+    console.log(isLoggedIn);
     return(
         <BrowserRouter>
             <Routes>
-                <Route path="/" element={<Main><Mypage/></Main>} />
-                <Route path="/register" element={<DefaultTemp><UserRegister/></DefaultTemp>} />
-                <Route path="/login" element={<DefaultTemp><Login/></DefaultTemp>} />
+
+                {/* <Route path="/" element={<Main><Mypage/></Main>} /> */}
+                {/*ログインしているときはMainを表示するログインしていないときはpath = /loginにリダイレクト飛ばす*/}
+                <Route path="/" element={isLoggedIn && (user !== undefined || user !== null) ? <Main><Mypage/></Main> : <Navigate to="/login"/>} />
+                <Route path="/register" element={!isLoggedIn || (user === undefined || user === null)  ? <DefaultTemp><UserRegister/></DefaultTemp> : <Navigate to="/"/>} />
+                <Route path="/login" element={!isLoggedIn || (user === undefined || user === null) ? <DefaultTemp><Login/></DefaultTemp> : <Navigate to="/"/>} />
                 <Route path="/500" element={<DefaultTemp><ServerError/></DefaultTemp>} />
             </Routes>
         </BrowserRouter>

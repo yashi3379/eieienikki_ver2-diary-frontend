@@ -1,10 +1,8 @@
 // UserRegister.jsx
 import React,{useContext} from 'react';
 import { useNavigate } from 'react-router-dom';
-
-import { UserContext } from '../../providers/UserProvider';
-import useCheckSession from '../../hooks/useCheckSession';
 import axios from 'axios';
+import { AuthContext } from '../../providers/AuthProvider';
 
 //バックエンド側の処理
 // app.post('/api/register', async (req, res) => {
@@ -23,15 +21,9 @@ import axios from 'axios';
 // );
 
 const UserRegister = () => {
-    const { isLoggedIn } = useCheckSession();
-    const { setUser } = useContext(UserContext);
+    const { setUser } = useContext(AuthContext);
     const navigate = useNavigate(); 
 
-    
-
-    if (isLoggedIn) {
-        return navigate('/');
-    }
 
     const handleClick = (e) => {
         e.preventDefault();
