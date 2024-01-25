@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import { useEffect, useContext, useState } from 'react';
 import axios from 'axios';
 import { UserContext } from '../providers/UserProvider';
@@ -15,9 +16,9 @@ import { UserContext } from '../providers/UserProvider';
 const useCheckSession = () => {
     const { user, setUser } = useContext(UserContext);
     const [isLoggedIn, setIsLoggedIn] = useState(false);
-    
-    
-      
+
+
+
     useEffect(() => {
         axios.get('http://localhost:3001/api/check-session')
             .then(response => {
@@ -26,16 +27,21 @@ const useCheckSession = () => {
                     setUser(response.data.user);
                     setIsLoggedIn(true);
                 } else {
-                    setUser(null);         
+                    setIsLoggedIn(false);
+                    setUser(null);
                 }
             })
-            .catch(() => {
+            .catch((error) => {
+                console.error('Session check failed:', error);
+                setIsLoggedIn(false);
                 setUser(null);
             })
-    }, [setUser, setIsLoggedIn]);
+    },
+        // eslint-disable-next-line 
+        []);
 
-    return { user , isLoggedIn };
-    
+    return { user, isLoggedIn };
+
 };
 
 export default useCheckSession;

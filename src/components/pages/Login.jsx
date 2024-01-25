@@ -5,6 +5,7 @@ import { UserContext} from '../../providers/UserProvider';
 
 
 import axios from 'axios';
+import { useEffect } from 'react';
 
 //バックエンド側の処理
 // app.post('/api/login', passport.authenticate('local'),async (req, res) => {
@@ -14,9 +15,11 @@ import axios from 'axios';
 const Login = () => {
     const navigate = useNavigate();
     const { user,setUser } = useContext(UserContext);
-    if(user){
-        return navigate('/');
-    }
+    useEffect(() => {
+        if (user) {
+            navigate('/');
+        }
+    }, [user, navigate]);
 
     const handleClick = (e) => {
         e.preventDefault();
