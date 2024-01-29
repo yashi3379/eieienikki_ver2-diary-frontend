@@ -5,11 +5,6 @@ export const Main = (props) => {
     
     const { children } = props;
     
-    // useEffect(() => {
-    //     if (!isLoggedIn || user === null) {
-    //         return navigate('/login');
-    //     }// eslint-disable-next-line
-    // }, [isLoggedIn]);
     return (
         <>
         <Header />
