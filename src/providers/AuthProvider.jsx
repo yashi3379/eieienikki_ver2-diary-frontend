@@ -3,11 +3,11 @@ import axios from 'axios';
 
 
 
-export const AuthContext = createContext({ isLoggedIn: false, user: null, setUser: null });
+export const AuthContext = createContext({ user: null, setUser: null });
 
 export const AuthProvider = ({ children }) => {
     const [user, setUser] = useState(null);
-    const [isLoggedIn, setIsLoggedIn] = useState(false);
+    const [isReady, setIsReady] = useState(false);
 
 
     useEffect(() => {
@@ -16,26 +16,30 @@ export const AuthProvider = ({ children }) => {
             .then(response => {
                 if (response.data.authenticated) {
                     setUser(response.data.user);
-                    setIsLoggedIn(true);
                 } else {
-                    setIsLoggedIn(false);
                     setUser(null);
                 }
+                console.log("---- setUser ----")
+                setIsReady(true);
+                console.log(user);
             })
             .catch((error) => {
                 console.error('Session check failed:', error);
-                setIsLoggedIn(false);
                 setUser(null);
+                setIsReady(true);
             })
     },
         // eslint-disable-next-line 
-        [setUser, setIsLoggedIn]);
+        [setUser, setIsReady]);
 
 
+    if (!isReady) {
+        return null;
+    }
 
 
     return (
-        <AuthContext.Provider value={{ isLoggedIn, user, setUser,setIsLoggedIn }}>
+        <AuthContext.Provider value={{user,setUser}}>
             {children}
         </AuthContext.Provider>
     );

@@ -13,7 +13,7 @@ import axios from 'axios';
 
 const Login = () => {
     const navigate = useNavigate();
-    const { setUser,setIsLoggedIn } = useContext(AuthContext);
+    const { setUser } = useContext(AuthContext);
 
 
 
@@ -28,7 +28,6 @@ const Login = () => {
                     //userをcontextに保存
                     console.log(response.data);
                     setUser(response.data.user);
-                    setIsLoggedIn(true);
                     navigate('/');
                 } else {
                     navigate('/login');
@@ -41,8 +40,12 @@ const Login = () => {
 
 
     }
+    const onClickRegister = () => {
+        navigate('/register');
+    }
 
     return (
+        <>
         <form onSubmit={(e) => handleClick(e)}>
             <label htmlFor="username">ユーザーネーム</label>
             <input type="text" id="username" name='username' />
@@ -50,6 +53,8 @@ const Login = () => {
             <input type="password" id="password" name='password' />
             <button type="submit">ログイン</button>
         </form>
+        <button onClick={onClickRegister}>新規登録</button>
+        </>
     );
 };
 

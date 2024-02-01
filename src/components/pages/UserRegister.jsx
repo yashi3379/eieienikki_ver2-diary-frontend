@@ -1,5 +1,5 @@
 // UserRegister.jsx
-import React,{useContext} from 'react';
+import React, { useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { AuthContext } from '../../providers/AuthProvider';
@@ -21,45 +21,45 @@ import { AuthContext } from '../../providers/AuthProvider';
 // );
 
 const UserRegister = () => {
-    const { setUser } = useContext(AuthContext);
-    const navigate = useNavigate(); 
+  const { setUser } = useContext(AuthContext);
+  const navigate = useNavigate();
 
 
-    const handleClick = (e) => {
-        e.preventDefault();
-        const username = e.target.username.value;
-        const email = e.target.email.value;
-        const password = e.target.password.value;
-        axios.post('http://localhost:3001/api/register', { username,email, password })
-            .then(response => {
-                console.log(response);
-                if (response.status === 200) {
-                    //userをcontextに保存
-                   setUser(response.data.user);
-                    navigate('/');
-                }else{
-                    navigate('/register');
-                }
-            })
-            .catch(error => {
-                console.log(error);
-                navigate('/500');
-            });
-        
+  const handleClick = (e) => {
+    e.preventDefault();
+    const username = e.target.username.value;
+    const email = e.target.email.value;
+    const password = e.target.password.value;
+    axios.post('http://localhost:3001/api/register', { username, email, password })
+      .then(response => {
+        console.log(response);
+        if (response.status === 200) {
+          //userをcontextに保存
+          setUser(response.data.user);
+          navigate('/');
+        } else {
+          navigate('/register');
+        }
+      })
+      .catch(error => {
+        console.log(error);
+        navigate('/500');
+      });
 
-    }
 
-    return (
-        <form onSubmit={(e) => handleClick(e)}>
-            <label htmlFor="username">ユーザ名</label>
-            <input type="text" id="username" name='username'/>
-            <label htmlFor="email">メールアドレス</label>
-            <input type="email" id="email" name='email'/>
-            <label htmlFor="password">パスワード</label>
-            <input type="password" id="password" name='password' />
-            <button type="submit">登録</button>
-        </form>
-    );
+  }
+
+  return (
+    <form onSubmit={(e) => handleClick(e)}>
+      <label htmlFor="username">ユーザ名</label>
+      <input type="text" id="username" name='username' />
+      <label htmlFor="email">メールアドレス</label>
+      <input type="email" id="email" name='email' />
+      <label htmlFor="password">パスワード</label>
+      <input type="password" id="password" name='password' />
+      <button type="submit">登録</button>
+    </form>
+  );
 };
 
 export default UserRegister;
