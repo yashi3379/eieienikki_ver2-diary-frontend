@@ -32,12 +32,13 @@ const Content = (props) => {
 
     export const DefaultTemp = (props) => {
         console.log(props);
-    const { children,isPublic } = props;
 
         return (
             <>
                 <AuthProvider >
-                <Content {...isPublic}>{children}</Content>
+                    <Content {...props}>
+                        {props.children}
+                    </Content>
                 </AuthProvider>
             </>
         );
