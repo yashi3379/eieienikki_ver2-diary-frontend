@@ -12,6 +12,7 @@ import axios from 'axios';
 // });
 
 const Login = () => {
+    console.log('Login');
     const navigate = useNavigate();
     const { setUser } = useContext(AuthContext);
 

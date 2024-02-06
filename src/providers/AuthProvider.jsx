@@ -19,9 +19,7 @@ export const AuthProvider = ({ children }) => {
                 } else {
                     setUser(null);
                 }
-                console.log("---- setUser ----")
                 setIsReady(true);
-                console.log(user);
             })
             .catch((error) => {
                 console.error('Session check failed:', error);
@@ -34,7 +32,7 @@ export const AuthProvider = ({ children }) => {
 
 
     if (!isReady) {
-        return null;
+        return <p>ローディング中</p>;
     }
 
 
