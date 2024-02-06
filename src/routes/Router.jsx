@@ -7,9 +7,10 @@ import { DefaultTemp } from '../components/templates/DefaultTemp';
 import Mypage from '../components/pages/Mypage';
 import UserRegister from '../components/pages/UserRegister';
 import Login  from '../components/pages/Login';
+import CreateDiary from '../components/pages/CreateDiary';
 import { ServerError } from '../components/pages/errors/ServerError';
 
-import CreateDiary from '../components/pages/CreateDiary';
+
 
 
 export const Router = () => {
@@ -19,9 +20,9 @@ export const Router = () => {
             <Routes>
                 <Route path="/" element= {<DefaultTemp><Mypage/></DefaultTemp>}  />
                 <Route path ="/create" element={<DefaultTemp><CreateDiary/></DefaultTemp>} />
-                <Route path="/register" element={ <DefaultTemp isPublic><UserRegister/></DefaultTemp> } />
+                <Route path="/register" element={ <DefaultTemp isPublic ><UserRegister/></DefaultTemp> } />
                 <Route path="/login" element={ <DefaultTemp isPublic><Login/></DefaultTemp>} />
-                <Route path="/500" element={<DefaultTemp isPublic><ServerError/></DefaultTemp>} />
+                <Route path="/500" element={<DefaultTemp isPublic ><ServerError/></DefaultTemp>} />
             </Routes>
         </BrowserRouter>
     )
