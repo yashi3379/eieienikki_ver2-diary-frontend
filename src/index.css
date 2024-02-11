@@ -1,0 +1,65 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.Card {
+    @apply bg-white shadow-md rounded-lg p-4;
+}
+
+.form-container {
+    @apply max-w-md mx-auto my-10 p-5 border rounded-lg shadow-lg w-full;
+}
+
+.form-input {
+    @apply shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:focus:shadow-md;
+}
+.form-textarea {
+    @apply shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:focus:shadow-md;
+}
+
+.form-label {
+    @apply block text-gray-700 text-sm font-bold mb-2;
+}
+
+.form-button {
+    @apply bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:focus:shadow-md;
+}
+
+.form-message {
+    @apply text-red-500;
+}
+
+.custom-bg {
+    @apply bg-custom-background bg-cover bg-center bg-no-repeat;
+}
+
+.title-logo {
+    font-family: 'Kiwi Maru', serif;
+    font-family: 'Zen Old Mincho', serif;
+    font-size: 2rem;
+}
+
+.bg-custom {
+    background-image: ;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.line-clamp-3 {
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 3;
+    overflow: hidden;
+    position: relative;
+  }
+  
+  /* /* .line-clamp-3::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    width: 100%;
+    height: 1.2em; 
+    background: linear-gradient(to bottom, transparent, white 50%);
+  }  */

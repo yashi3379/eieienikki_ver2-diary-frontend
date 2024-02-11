@@ -1,20 +1,48 @@
+import { useContext } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { AuthContext } from "../../../providers/AuthProvider";
+import toplogo from "../../images/toplogo-removebg-preview.png";
 
 export const Header = () => {
     const navigate = useNavigate();
+    const { setUser,user } = useContext(AuthContext);
     const logout = async () => {
         try {
-            await axios.post("http://localhost:3001/api/logout");
-            navigate("/login");
+            await axios.post("http://localhost:3001/api/logout")
+            .then(response => {
+                console.log(response);
+                if (response.status === 200) {
+                    //userをcontextに保存
+                    setUser(null);
+                    navigate("/login");
+                } else {
+                    navigate("/500");
+                }
+            })
         } catch (error) {
             console.error(error);
         }
     };
     return (
-        <header className="header">
-            <p>header 2024 Yeah!英絵日記</p>
-            <button onClick={logout}>ログアウト</button>
+        <header className="bg-yellow-300 p-2 flex justify-between items-center ">
+            
+            <img src={toplogo} alt="toplogo" className="w-20 h-20" />
+            {user ? (
+                <button onClick={logout} className="bg-red-500 text-white py-2 px-4 rounded hover:bg-red-700 transition duration-300">
+                    ログアウト
+                </button>
+            ) : (
+                <div>
+                    <button onClick={() => navigate("/login")} className="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-700 transition duration-300 mr-2">
+                        ログイン
+                    </button>
+                    <button onClick={() => navigate("/register")} className="bg-green-500 text-white py-2 px-4 rounded hover:bg-green-700 transition duration-300">
+                        新規登録
+                    </button>
+                </div>
+            )}
+            
         </header>
     );
     }
