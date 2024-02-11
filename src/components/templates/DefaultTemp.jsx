@@ -1,6 +1,5 @@
 import React, { useContext } from "react";
 import { Header } from "../organisms/layout/Header";
-import { Footer } from "../organisms/layout/Footer";
 import { AuthProvider, AuthContext } from "../../providers/AuthProvider";
 import { Navigate } from "react-router-dom";
 
@@ -19,25 +18,27 @@ const Content = (props) => {
         return <Navigate to="/login" />;
 
     }
+    if(isPublic && user){
+        return <Navigate to="/" />;
+    }
 
         return (
             <>
                 <Header />
                 {children}
-                <Footer />
             </>
         )
     }
 
 
     export const DefaultTemp = (props) => {
-        console.log(props);
+        const{children,isPublic} = props;
 
         return (
             <>
                 <AuthProvider >
-                    <Content {...props}>
-                        {props.children}
+                    <Content isPublic={isPublic}>
+                        {children}
                     </Content>
                 </AuthProvider>
             </>

@@ -50,15 +50,23 @@ const UserRegister = () => {
   }
 
   return (
-    <form onSubmit={(e) => handleClick(e)}>
-      <label htmlFor="username">ユーザ名</label>
-      <input type="text" id="username" name='username' />
-      <label htmlFor="email">メールアドレス</label>
-      <input type="email" id="email" name='email' />
-      <label htmlFor="password">パスワード</label>
-      <input type="password" id="password" name='password' />
-      <button type="submit">登録</button>
-    </form>
+    <div className='custom-bg w-full min-h-screen'>
+      <form onSubmit={(e) => handleClick(e)} className="form-container">
+        <div className="mb-4">
+          <label htmlFor="username" className="form-label">ユーザ名</label>
+          <input type="text" id="username" name='username' className="form-input" />
+        </div>
+        <div className="mb-4">
+          <label htmlFor="email" className="form-label">メールアドレス</label>
+          <input type="email" id="email" name='email' className="form-input" />
+        </div>
+        <div className="mb-6">
+          <label htmlFor="password" className="form-label">パスワード</label>
+          <input type="password" id="password" name='password' className="form-input" />
+        </div>
+        <button type="submit" className="form-button">登録</button>
+      </form>
+    </div>
   );
 };
 
