@@ -2,12 +2,16 @@
 @tailwind components;
 @tailwind utilities;
 
+.date-style{
+    @apply text-orange-400 rounded-t-lg shadow-md bg-slate-100  font-bold sm:text-2xl py-3 px-3 md:text-3xl 
+}
+
 .Card {
-    @apply bg-white shadow-md rounded-lg p-4;
+    @apply bg-white shadow-md rounded-b-lg p-4 mb-4 cursor-pointer ;
 }
 
 .form-container {
-    @apply max-w-md mx-auto my-10 p-5 border rounded-lg shadow-lg w-full;
+    @apply max-w-md mx-auto my-10 p-5 border rounded-lg shadow-lg w-full bg-white;
 }
 
 .form-input {
@@ -40,7 +44,7 @@
 }
 
 .bg-custom {
-    background-image: ;
+    background-image: url("./components/images/PC_background.jpg");
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
