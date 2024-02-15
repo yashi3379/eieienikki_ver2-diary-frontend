@@ -18,9 +18,7 @@ const Content = (props) => {
         return <Navigate to="/login" />;
 
     }
-    if(isPublic && user){
-        return <Navigate to="/" />;
-    }
+    
 
         return (
             <>
