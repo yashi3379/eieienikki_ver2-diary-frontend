@@ -48,7 +48,7 @@ const MyPage = () => {
                                             <h3 className="text-lg font-semibold">{diary.title}</h3>
                                             <p className="text-gray-700 line-clamp-3 md:line-clamp-6">{diary.content}</p>
                                         </div>
-                                        <div className="sm:border-y sm:py-4 md:border-none md:px-4 py-0">
+                                        <div className="sm:border-y sm:py-4 md:border-none md:px-4 md:py-0">
                                             <h3 className="text-md font-semibold">{diary.translate.title}</h3>
                                             <p className="text-gray-600 line-clamp-3 md:line-clamp-6 ">{diary.translate.content}</p>
                                         </div>

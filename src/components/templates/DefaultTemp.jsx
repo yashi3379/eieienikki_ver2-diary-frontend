@@ -18,8 +18,6 @@ const Content = (props) => {
         return <Navigate to="/login" />;
 
     }
-    
-
         return (
             <>
                 <Header />
