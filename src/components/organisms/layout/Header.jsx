@@ -29,7 +29,7 @@ export const Header = () => {
             
             <img src={toplogo} alt="toplogo" className="w-20 h-20" />
             {user ? (
-                <button onClick={logout} className="bg-red-500 text-white py-2 px-4 rounded hover:bg-red-700 transition duration-300">
+                <button onClick={logout} className="delite-button">
                     ログアウト
                 </button>
             ) : (
