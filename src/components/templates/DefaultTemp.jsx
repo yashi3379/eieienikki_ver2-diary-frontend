@@ -10,9 +10,6 @@ const Content = (props) => {
     const { user } = useContext(AuthContext);
     
 
-    console.log(user);
-    console.log(isPublic);
-
     if (!isPublic && !user) {
         //loginにNavigateした時にisPublicが認識されていない
         return <Navigate to="/login" />;

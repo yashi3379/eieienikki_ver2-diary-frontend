@@ -37,6 +37,10 @@
     @apply bg-custom-background bg-cover bg-center bg-no-repeat;
 }
 
+.delite-button {
+    @apply bg-red-500 text-white py-2 px-4 rounded hover:bg-red-700 transition duration-300
+}
+
 .title-logo {
     font-family: 'Kiwi Maru', serif;
     font-family: 'Zen Old Mincho', serif;
@@ -57,6 +61,7 @@
     overflow: hidden;
     position: relative;
   }
+
   
   /* /* .line-clamp-3::after {
     content: '';
