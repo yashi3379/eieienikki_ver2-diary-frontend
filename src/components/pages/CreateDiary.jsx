@@ -1,8 +1,9 @@
-import React, { useContext } from 'react';
+import React, { useContext,useState } from 'react';
 import { useNavigate,useLocation, Link } from 'react-router-dom';
 import axios from 'axios';
 
 import { AuthContext } from '../../providers/AuthProvider';
+import { LoadingScreen } from '../molecules/LogingScreen';
 
 
 
@@ -13,12 +14,16 @@ const CreateDiary = () => {
     const navigate = useNavigate();
     const location = useLocation();
     const message = location.state ? location.state.message : null;
+    const [isLoading, setIsLoading] = useState(false);
 
+    
     const onCreateDiary = (e) => {
         e.preventDefault();
+        setIsLoading(true); // ローディング開始
         const title = e.target.title.value;
         const content = e.target.content.value;
-        const userId = user._id;
+        const userId = user._id; // `user` がどこから来たのか確認してください
+
         axios.post('http://localhost:3001/api/CreateDiary', { userId, title, content })
             .then(response => {
                 console.log(response);
@@ -29,20 +34,24 @@ const CreateDiary = () => {
                 }
             })
             .catch(error => {
-                if (error.response.status === 401) {
+                if (error.response && error.response.status === 401) {
                     navigate('/create', { state: { message: '日記の作成に失敗しました' } });
-                    return;
+                } else {
+                    console.log(error);
+                    navigate('/500');
                 }
-                console.log(error);
-                navigate('/500');
-
+            })
+            .finally(() => {
+                setIsLoading(false); // ローディング終了
             });
+    };
 
+    
 
-    }
 
     return (
         <div className='custom-bg w-full min-h-screen'>
+            {isLoading && <LoadingScreen />}
             <h1 className="text-3xl font-bold mb-4 text-center mt-3">日記作成</h1>
             <h2 className="text-2xl font-bold my-4 text-center">Hello, {user.username}!</h2>
             <form onSubmit={(e) => onCreateDiary(e)} className="form-container">

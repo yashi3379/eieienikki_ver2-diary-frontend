@@ -40,6 +40,20 @@
 .delite-button {
     @apply bg-red-500 text-white py-2 px-4 rounded hover:bg-red-700 transition duration-300
 }
+.success-button {
+    @apply bg-green-500 text-white py-2 px-4 rounded hover:bg-green-700 transition duration-300
+}
+
+.image-style {
+    @apply w-32 h-auto;
+}
+.loading-container{
+    @apply fixed inset-0 z-50 flex flex-col items-center justify-center bg-black bg-opacity-50
+}
+.loading-icon{
+    @apply animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-white
+}
+
 
 .title-logo {
     font-family: 'Kiwi Maru', serif;

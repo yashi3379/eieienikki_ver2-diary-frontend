@@ -80,7 +80,9 @@ const IndividualDiary = () => {
                     </div>
                 </Card>
                 <div className="flex justify-end pb-8">
+                <button onClick={() => navigate('/')} className="success-button mr-4">マイページに戻る</button>
                     <button onClick={onClickDeliteDiary} className="delite-button">日記を削除する</button>
+                    
                 </div>
             </div>
         </div>

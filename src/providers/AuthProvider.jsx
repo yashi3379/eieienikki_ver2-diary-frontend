@@ -1,5 +1,6 @@
 import React, { createContext, useState, useEffect } from 'react';
 import axios from 'axios';
+import { LoadingScreen } from '../components/molecules/LogingScreen';
 
 export const AuthContext = createContext({ user: null, setUser: null });
 
@@ -28,7 +29,7 @@ export const AuthProvider = ({ children }) => {
     }, [setUser, setIsReady]);
 
     if (!isReady) {
-        return <p>ローディング中...</p>;
+        return <LoadingScreen />;
     }
 
     return (
